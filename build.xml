@@ -10,7 +10,7 @@
 
 <!-- Dist Clean everyting -->
 <target name="distclean" depends="clean">
-  <delete dir="build/lcm"/>
+  <delete dir="bin/lcm"/>
   <delete file="lcm.jar"/>
   <delete dir="depcache"/>
 </target>
@@ -19,7 +19,7 @@
 <target name="build-jar">
 <jar destfile="lcm.jar">
 
-  <fileset dir="build">
+  <fileset dir="bin">
     <include name="**/*.class" />
   </fileset>
 
@@ -29,19 +29,20 @@
 
 <target name="build-java">
  <!-- This compiles all the java -->
+ <mkdir dir="bin"/>
  <javac
   srcdir="lcm"
   includes="**/*.java"
   debug="on"
   optimize="off"
-  destdir="build"
+  destdir="bin"
   source="1.5">
 </javac>
 </target>
 
 <target name="clean-java" >
+ <delete dir="bin"/>
  <delete>
-  <fileset dir="build" includes="**/*.class"/>
   <fileset dir="." includes="**/*~" defaultexcludes="no"/>
   <fileset dir="." includes="lcm.jar"/>
  </delete>
