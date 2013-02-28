@@ -215,6 +215,7 @@ public class UDPMulticastProvider implements Provider
 
             while (true) {
                 try {
+                	packet.setLength(65536);
                     sock.receive(packet);
                     handlePacket(packet);
                 } catch (IOException ex) {
