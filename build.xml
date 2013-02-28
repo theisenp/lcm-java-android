@@ -1,51 +1,52 @@
 <?xml version="1.0" ?>
-
 <project name="lcm" default="build" basedir=".">
 
-<!-- Build everything -->
-<target name="build" depends="build-java,build-jar"/>
+   <!-- Properties -->
+   <property name="bin.dir" value="bin"/>
 
-<!-- Clean everything -->
-<target name="clean" depends="clean-java"/>
+   <!-- Build everything -->
+   <target name="build" depends="build-java, build-jar"/>
 
-<!-- Dist Clean everyting -->
-<target name="distclean" depends="clean">
-  <delete dir="bin/lcm"/>
-  <delete file="lcm.jar"/>
-  <delete dir="depcache"/>
-</target>
+   <!-- Clean everything -->
+   <target name="clean" depends="clean-java"/>
 
-<!-- Build Jar -->
-<target name="build-jar">
-<jar destfile="lcm.jar">
+   <!-- Dist Clean everyting -->
+   <target name="distclean" depends="clean">
+      <delete dir="${bin.dir}/lcm"/>
+      <delete file="lcm.jar"/>
+      <delete dir="depcache"/>
+   </target>
 
-  <fileset dir="bin">
-    <include name="**/*.class" />
-  </fileset>
+   <!-- Build Jar -->
+   <target name="build-jar">
+      <jar destfile="lcm.jar">
+         <fileset dir="${bin.dir}">
+            <include name="**/*.class" />
+         </fileset>
+      </jar>
+      <copy file="lcm.jar" todir="." />
+   </target>
 
- </jar>
- <copy file="lcm.jar" todir="." />
-</target>
+   <!-- Compile all the java classes -->
+   <target name="build-java">
+      <mkdir dir="${bin.dir}"/>
+      <javac
+        srcdir="lcm"
+        includes="**/*.java"
+        debug="on"
+        optimize="off"
+        destdir="${bin.dir}"
+        source="1.5">
+      </javac>
+   </target>
 
-<target name="build-java">
- <!-- This compiles all the java -->
- <mkdir dir="bin"/>
- <javac
-  srcdir="lcm"
-  includes="**/*.java"
-  debug="on"
-  optimize="off"
-  destdir="bin"
-  source="1.5">
-</javac>
-</target>
-
-<target name="clean-java" >
- <delete dir="bin"/>
- <delete>
-  <fileset dir="." includes="**/*~" defaultexcludes="no"/>
-  <fileset dir="." includes="lcm.jar"/>
- </delete>
-</target>
+   <!-- Delete binary outputs from the Java build -->
+   <target name="clean-java" >
+      <delete dir="${bin.dir}"/>
+      <delete>
+         <fileset dir="." includes="**/*~" defaultexcludes="no"/>
+         <fileset dir="." includes="lcm.jar"/>
+      </delete>
+   </target>
 
 </project>
